@@ -1,6 +1,8 @@
+import { Navbar } from "./elements.js";
 import { LeonSansFont } from "./font.js";
 
 const logoText = "keepgo\nstudio";
+
 
 window.onload = () => {
   // initializing for logo canvas
@@ -23,5 +25,5 @@ window.onload = () => {
     40
   );
 
-	
+	new Navbar();
 };

@@ -4,8 +4,9 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./css/reset.css" />
-    <link rel="stylesheet" href="./css/styles.css" />
+    <link rel="stylesheet" href="./css/reset.css" >
+    <link rel="stylesheet" href="./css/styles.css" >
+    <link rel="stylesheet" href="./css/fade-setting.css">
     <script src="./lib/leon.js"></script>
     <title>Document</title>
   </head>
@@ -46,22 +47,22 @@
     </nav>
 
     <section id="home">
-      <div class="header-text-container">
+      <div class="header-text-container" fadeIn delay='0.3s'>
         <h1>TAB MANAGER</h1>
         <p>v1.0 available in chrome<img src="./img/chrome-favicon.png" /></p>
       </div>
 
-      <div class="hero">
+      <div class="hero" fadeIn delay="0.5s">
         <img src="./img/home-hero1.png" alt="home's hero" />
       </div>
 
-      <div class="body-text-container">
+      <div class="body-text-container" fadeIn>
         <h2>Tab manager will make your browsing more simple and easy</h2>
       </div>
     </section>
 
     <section id="about">
-      <header>
+      <header fadeIn>
         <img src="./img/megaphone.png" alt="megaphone image" />
 
         <h3>
@@ -70,13 +71,13 @@
       </header>
 
       <main>
-        <div class="header-text-container">
+        <div class="header-text-container" fadeIn>
           The tab manager will increase your computer speed by removing tabs
           that occupied your memory and cause low performance
           <img class="quotation" src="./img/quotation.png" />
         </div>
 
-        <ul class="features-container">
+        <ul class="features-container" fadeIn>
           <li class="i1 about-selected">
             <!-- should remove -->
             <p>saving<br />memory</p>
@@ -130,7 +131,7 @@
           </li>
         </ul>
 
-        <div class="video-container">
+        <div class="video-container" fadeIn>
           <video width="700" autoplay loop muted>
             <source src="./videos/hero1-compress.mp4" />
           </video>
@@ -148,20 +149,20 @@
     </section>
 
     <section id="features">
-      <header>
+      <header fadeInOut>
         More features<br />
         in future
       </header>
 
       <main>
         <div class="f1">
-          <h2>Sync tabs</h2>
+          <h2 fadeInOut>Sync tabs</h2>
 
-          <div class="wrapper">
+          <div class="wrapper" fadeInOut>
             <img src="./img/features-hero1.png" alt="" />
           </div>
 
-          <div class="text">
+          <div class="text" fadeInOut>
             <p>will update at version 3.0!</p>
             <p>
               you can manage your current tabs and saved tabs with cloud in
@@ -171,13 +172,13 @@
         </div>
 
         <div class="f2">
-          <h2>Categorized</h2>
+          <h2 fadeInOut>Categorized</h2>
 
-          <div class="wrapper">
+          <div class="wrapper" fadeInOut>
             <img src="./img/features-hero2.png" alt="" />
           </div>
 
-          <div class="text">
+          <div class="text" fadeInOut>
             <p>will update at version 3.0!</p>
             <p>
               categorized saved tabs so you can handle them more concisely and
@@ -188,7 +189,7 @@
       </main>
     </section>
 
-    <section id="cost">
+    <section id="cost" fadeIn>
       <div class="container">
         <h1>Cost</h1>
         <div class="card">
@@ -203,7 +204,7 @@
 
     <section id="keepgo">
       <section class="news">
-        <div class="notes-container">
+        <div class="notes-container" fadeIn>
           <h1>Update notes</h1>
 
           <ul class="notes-list">
@@ -227,7 +228,7 @@
       </section>
 
       <section class="ending">
-        <div class="container">
+        <div fadeInOut class="container">
           <h1>Enjoy our extension</h1>
 
           <canvas class="keepgo-studio-logo"></canvas>

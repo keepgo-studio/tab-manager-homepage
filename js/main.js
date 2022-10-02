@@ -1,8 +1,8 @@
 import { Navbar } from "./elements.js";
 import { LeonSansFont } from "./font.js";
+import { ElementsFadeIn, ElementsFadeInOut } from "./utils.js";
 
 const logoText = "keepgo\nstudio";
-
 
 window.onload = () => {
   // initializing for logo canvas
@@ -25,5 +25,11 @@ window.onload = () => {
     40
   );
 
-	new Navbar();
+  new Navbar();
+
+  const fadeInElements = document.querySelectorAll("[fadeIn]");
+  const fadeInOutElements = document.querySelectorAll("[fadeInOut]");
+	
+  new ElementsFadeIn(fadeInElements);
+  new ElementsFadeInOut(fadeInOutElements);
 };

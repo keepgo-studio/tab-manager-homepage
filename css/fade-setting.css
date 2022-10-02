@@ -1,7 +1,5 @@
 [fadeIn], [fadeInOut] {
-  transition: ease 600ms;
-  position: relative;
-  top: 10px;
+  position: relative; 
   opacity: 0;
 }
 [delay='0.2s'] {

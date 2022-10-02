@@ -61,7 +61,7 @@ nav .items-list {
   font-size: 1.25rem;
   position: relative;
 }
-nav .items-list a:not(:last-child) {
+nav .items-list a:not(:nth-last-child(2)) {
   margin-right: 2rem;
 }
 nav .btn-style-s {
@@ -88,6 +88,9 @@ nav .current{
 .nav2 {
   height: 80px;
   background-color: var(--normal-white);
+}
+nav .mb-icon {
+  display: none;
 }
 /* -----------nav styles----------- */
 
@@ -438,7 +441,6 @@ nav .current{
   justify-content: space-between;
   min-height: 300px;
   max-width: var(--max-width-xl);
-  width: 100%;
   margin: auto;
 }
 #footer .container {
@@ -461,4 +463,69 @@ nav .current{
 /* -----------footer styles----------- */
 nav[dark] svg {
   fill: white;
+}
+
+@media screen and (max-width: 840px) {
+  nav {
+    background-color: var(--normal-white);
+  }
+  nav .items-list {
+    top:80px;
+    left:0;
+    position: absolute;
+    width: 100%;
+    background-color: var(--normal-white);
+    flex-direction: column;
+    align-items: stretch;
+    overflow: hidden;
+  }
+  nav .items-list a:not(:last-child) {
+    display: block;
+    margin: 0;
+    text-align: right;
+    padding: 10px 1rem 10px 0;
+  }
+  nav .mb-icon {
+    display: block;
+    position: relative;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+  }
+  nav .mb-icon span,
+  nav .mb-icon::after, 
+  nav .mb-icon::before {
+    border-radius: 999px;
+    display: block;
+    content: '';
+    width: 24px;
+    height: 4px;
+    background-color: var(--normal-black);
+    transition: ease 300ms;
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+  }
+  nav .mb-icon::after {
+    top: 25%;
+  }
+  nav .mb-icon::before {
+    top: 75%;
+  }
+  nav .mb-icon.clicked span {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  nav .mb-icon.clicked::before {
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+  } 
+  nav .mb-icon.clicked::after {
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+  nav .current {
+    display: none;
+  }
 }

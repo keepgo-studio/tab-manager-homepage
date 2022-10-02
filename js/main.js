@@ -1,8 +1,8 @@
 import { AboutSection, Navbar } from "./elements.js";
 import { LeonSansFont } from "./font.js";
+import { logoText } from "./global.js";
 import { ElementsFadeIn, ElementsFadeInOut, FadeSetting } from "./utils.js";
 
-const logoText = "keepgo\nstudio";
 
 window.onload = () => {
   // initializing for logo canvas

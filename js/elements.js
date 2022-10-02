@@ -1,75 +1,140 @@
 "use strice";
 
+import { mb1 } from "./global.js";
 import { getSectionsHeight, hexToRgb } from "./utils.js";
 
 export class Navbar {
   _elem;
+  _currentElem;
   _hideY = 0;
   _transformY = 0;
   _sectionsOffsetTop = [];
   _coor = [];
+  _currentLeft = 0;
 
-  currentElem;
-  currentLeft = 0;
+  // for mobile style
+  _mbBtnElem;
+  _mbListElem;
+  _ro;
+  _mode = "pc";
 
   borderGap = 10;
 
   constructor() {
     this._elem = document.getElementById("navbar");
-    this.currentElem = document.querySelector("nav .current");
+
+    this._currentElem = document.querySelector("nav .current");
 
     this._hideY =
-      document.querySelector(".header-text-container").offsetTop -
+      document.querySelector("#home .header-text-container").offsetTop -
       this._elem.offsetHeight;
+
     this._transformY =
       document.getElementById("home").offsetHeight - this.borderGap;
 
     this._sectionsOffsetTop = getSectionsHeight();
 
-    [...this._elem.querySelector(".items-list").children].forEach((elem) => {
+    [...this._elem.querySelectorAll(".items-list a")].forEach((elem) => {
       this._coor.push(parseInt(elem.offsetLeft + elem.offsetWidth / 2));
     });
-    this.currentLeft = 0;
+
+    this._currentLeft = 0;
+
+    this._mbBtnElem = this._elem.querySelector(".mb-icon");
+
+    this._mbListElem = this._elem.querySelector(".items-list");
+
+    this._ro = new ResizeObserver((entries) => {
+      if (window.innerWidth <= mb1) {
+        if (this._mode === "pc") {
+          this.initMbStyle();
+          // console.log('pc -> mb');
+        }
+        this._mode = "mb";
+      } else {
+        
+        if (this._mode === 'mb') {
+          this._mbBtnElem.classList.remove("clicked");
+          this.removeMbStyle();
+          // console.log('mb -> pc')
+        }
+        this._mode = "pc";
+      }
+    });
+    this._ro.observe(this._elem);
 
     requestAnimationFrame(this.animate.bind(this));
   }
 
-  init() {}
+  handleBtnClick(e) {
+    const isClicked = e.currentTarget.classList.toggle("clicked");
+    if (isClicked) {
+      this._mbListElem.style.height = 'fit-content';
+    } else {
+      this._mbListElem.style.height = '0';
+    }
+  }
+  initMbStyle() {
+   this._elem.classList.remove('hide');
+   this._elem.classList.remove('nav2');
+  this._mbListElem.style.height = '0px';
 
-  animate() {
+    this._mbBtnElem.addEventListener("click", this.handleBtnClick.bind(this), {
+      passive: true,
+    });
+  }
+  removeMbStyle() {
+    this._mbListElem.style.height = 'fit-content';
+
+    this._mbBtnElem.removeEventListener("click", this.handleBtnClick.bind(this));
+  }
+
+  renderHide() {
     if (this._hideY <= window.scrollY && window.scrollY < this._transformY) {
       this._elem.classList.add("hide");
     } else {
       this._elem.classList.remove("hide");
     }
+  }
 
+  renderTransform() {
     if (window.scrollY >= this._transformY) {
       this._elem.classList.add("nav2");
     } else {
       this._elem.classList.remove("nav2");
     }
+  }
 
+  renderCurrentElem() {
     this._sectionsOffsetTop.forEach((offsetTop, idx) => {
       offsetTop -= this.borderGap;
 
       if (idx == 0 && window.scrollY < offsetTop) {
-        this.currentLeft = 0;
+        this._currentLeft = 0;
       } else if (
         idx < this._sectionsOffsetTop.length &&
         offsetTop <= window.scrollY &&
         window.scrollY < this._sectionsOffsetTop[idx + 1]
       ) {
-        this.currentLeft = this._coor[idx];
+        this._currentLeft = this._coor[idx];
       } else if (offsetTop <= window.scrollY) {
-        this.currentLeft = this._coor[idx];
+        this._currentLeft = this._coor[idx];
       }
     });
 
-    if (this.currentLeft == 0) {
-      this.currentElem.style.display = "none";
+    if (this._currentLeft == 0) {
+      this._currentElem.style.display = "none";
     } else {
-      this.currentElem.style.display = "block";
-      this.currentElem.style.left = `${this.currentLeft}px`;
+      this._currentElem.style.display = "block";
+      this._currentElem.style.left = `${this._currentLeft}px`;
+    }
+  }
+
+  animate() {
+    if (this._mode === 'pc') {
+      this.renderHide();
+      this.renderTransform();
+      this.renderCurrentElem();
     }
 
     requestAnimationFrame(this.animate.bind(this));

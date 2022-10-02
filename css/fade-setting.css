@@ -1,4 +1,4 @@
-[fadeIn], [fadeInOut] {
+[fadeIn], [fadeInOut], [manualFadeIn] {
   position: relative; 
   opacity: 0;
 }

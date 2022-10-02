@@ -25,14 +25,19 @@ export class LeonSansFont {
             weight
         });
 
-        requestAnimationFrame(this.animate.bind(this));
+        this.draw();
+        // requestAnimationFrame(this.animate.bind(this));
     }
 
-    animate(t) {
-        requestAnimationFrame(this.animate.bind(this));
+    // animate(t) {
+    //     requestAnimationFrame(this.animate.bind(this));
     
-        this._ctx.clearRect(0, 0, this._sw, this._sh);
+    //     this._ctx.clearRect(0, 0, this._sw, this._sh);
     
+    //     this.draw();
+    // }
+    
+    draw() {
         const x = (this._sw - this._leon.rect.w) / 2;
         const y = (this._sh - this._leon.rect.h) / 2;
         this._leon.position(x, y);

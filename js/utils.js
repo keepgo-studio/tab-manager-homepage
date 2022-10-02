@@ -28,6 +28,16 @@ export function fitScroll(
   };
 }
 
+export function hexToRgb(hex) {
+  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result
+    ? {
+        red: parseInt(result[1], 16),
+        green: parseInt(result[2], 16),
+        blue: parseInt(result[3], 16),
+      }
+    : null;
+}
 export function getSectionsHeight() {
   const sectionIds = ["about", "features", "cost", "keepgo"];
 
@@ -38,44 +48,64 @@ export function getSectionsHeight() {
   return sectionsOffsetTop;
 }
 
-function _fadeSettingsStyles(
-  transitionFunction,
-  trasnitionDurationMs,
-  trasnitionDistance
-) {
-  return `
-    transition-timing-function: ${transitionFunction};
-    transition-duration: ${trasnitionDurationMs}ms;
-    top: ${trasnitionDistance}px;
-  `;
-}
 
+export class FadeSetting {
+  constructor(
+    { fiTransitionFunction, fiTrasnitionDurationMs, fiTrasnitionDistance },
+    { fioTransitionFunction, fioTrasnitionDurationMs, fioTrasnitionDistance }
+  ) {
+    const s = document.createElement("style");
+    s.innerHTML = `
+    [fadeIn] {
+      transition-timing-function: ${fiTransitionFunction} !important;
+      transition-duration: ${fiTrasnitionDurationMs}ms !important;
+      top: ${fiTrasnitionDistance}px !important;
+    }
+    [fadeIn="show"] {
+      opacity: 1 !important;
+      top: 0 !important;
+    }
+
+    [manualFadeIn] {
+      transition-timing-function: ${fiTransitionFunction} !important;
+      transition-duration: ${fiTrasnitionDurationMs}ms !important;
+      top: ${fiTrasnitionDistance}px !important;
+    }
+    [manualFadeIn="show"] {
+      opacity: 1 !important;
+      top: 0 !important;
+    }
+
+    [fadeInOut]  {
+      transition-timing-function: ${fioTransitionFunction} !important;
+      transition-duration: ${fioTrasnitionDurationMs}ms !important;
+      top: ${fioTrasnitionDistance}px !important;
+    }
+    [fadeInOut="show"] {
+      opacity: 1 !important;
+      top: 0 !important;
+    }
+    `;
+
+    document.head.appendChild(s);
+  }
+}
 export class ElementsFadeIn {
-  distance = 10;
+  _io;
   _elements;
 
   constructor(elements) {
-    this._elements = elements;
-
-    const fiStyle = document.createElement("style");
-    fiStyle.innerHTML = `
-    [fadeIn] {
-      ${_fadeSettingsStyles("ease", 500, this.distance)}
-    }
-    `
-
-    document.head.appendChild(fiStyle);
+    this._elements = elements ?? [];
 
     this.attach();
   }
 
   attach() {
-    const io = new IntersectionObserver(
+    this._io = new IntersectionObserver(
       (entries, observer) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.style.opacity = 1;
-            entry.target.style.top = 0;
+            entry.target.setAttribute("fadeIn", "show");
 
             observer.unobserve(entry.target);
           }
@@ -87,39 +117,36 @@ export class ElementsFadeIn {
     );
 
     this._elements.forEach((e) => {
-      io.observe(e);
+      this._io.observe(e);
     });
+  }
+
+  append(elem) {
+    this._io.observe(elem);
+  }
+
+  remove(elem) {
+    this._io.unobserve(elem);
   }
 }
 export class ElementsFadeInOut {
-  distance = 10;
   _elements;
+  _io;
 
   constructor(elements) {
-    this._elements = elements;
-
-    const fioStyle = document.createElement('style')
-    fioStyle.innerHTML = `
-    [fadeInOut]  {
-      ${_fadeSettingsStyles("ease-in-out", 300, this.distance)}
-    }
-    `
-
-    document.head.appendChild(fioStyle);
+    this._elements = elements ?? [];
 
     this.attach();
   }
 
   attach() {
-    const io = new IntersectionObserver(
+    this._io = new IntersectionObserver(
       (entries, observer) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.style.opacity = 1;
-            entry.target.style.top = 0;
+            entry.target.setAttribute("fadeInOut", "show");
           } else {
-            entry.target.style.opacity = 0;
-            entry.target.style.top = `${this.distance}px`;
+            entry.target.setAttribute("fadeInOut", "");
           }
         });
       },
@@ -129,7 +156,11 @@ export class ElementsFadeInOut {
     );
 
     this._elements.forEach((e) => {
-      io.observe(e);
+      this._io.observe(e);
     });
+  }
+
+  append(elem) {
+    this._io.observe(elem);
   }
 }

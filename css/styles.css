@@ -190,6 +190,7 @@ nav .current{
   border-radius: 15px;
   font-size: 28px;
   font-weight: bold;
+  cursor: pointer;
 }
 #about main .features-container li:not(:last-child) {
   margin-right: 1rem;
@@ -198,10 +199,16 @@ nav .current{
   margin-top: 1rem;
 }
 #about main .video-container {
-  margin: 15rem auto 0 auto;
+  margin: 12rem auto 0 auto;
   position: relative;
   width: 100%;
   max-width: var(--max-width-xl);
+  height: 600px;
+}
+#about main .video-container video {
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 #about main .video-container .text-container {
   max-width: 416px;
@@ -211,7 +218,6 @@ nav .current{
 }
 #about main .video-container .text-container h1 {
   font-size: 60px;
-  color: #0070f3;
   font-family: OutfitBold;
 }
 #about main .video-container .text-container p {
@@ -227,12 +233,6 @@ nav .current{
   width: 300px;
   height: 300px;
   border-radius: 50%;
-  background: linear-gradient(
-    226.64deg,
-    #4f6efc 13.13%,
-    rgba(79, 110, 252, 0.611012) 34.38%,
-    rgba(79, 110, 252, 0) 67.76%
-  );
 }
 /* -----------about styles----------- */
 

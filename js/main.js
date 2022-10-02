@@ -1,6 +1,6 @@
-import { Navbar } from "./elements.js";
+import { AboutSection, Navbar } from "./elements.js";
 import { LeonSansFont } from "./font.js";
-import { ElementsFadeIn, ElementsFadeInOut } from "./utils.js";
+import { ElementsFadeIn, ElementsFadeInOut, FadeSetting } from "./utils.js";
 
 const logoText = "keepgo\nstudio";
 
@@ -26,10 +26,23 @@ window.onload = () => {
   );
 
   new Navbar();
+  new AboutSection();
 
   const fadeInElements = document.querySelectorAll("[fadeIn]");
   const fadeInOutElements = document.querySelectorAll("[fadeInOut]");
-	
+
+  new FadeSetting(
+    {
+      fiTransitionFunction: "ease",
+      fiTrasnitionDurationMs: 500,
+      fiTrasnitionDistance: 15,
+    },
+    {
+      fioTransitionFunction: "ease-in-out",
+      fioTrasnitionDurationMs: 300,
+      fioTrasnitionDistance: 15,
+    }
+  );
   new ElementsFadeIn(fadeInElements);
   new ElementsFadeInOut(fadeInOutElements);
 };

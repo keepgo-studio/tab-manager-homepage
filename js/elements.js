@@ -1,6 +1,6 @@
 "use strice";
 
-import { mb1 } from "./global.js";
+import { mb1, mb2 } from "./global.js";
 import { getSectionsHeight, hexToRgb } from "./utils.js";
 
 export class Navbar {
@@ -15,6 +15,7 @@ export class Navbar {
   // for mobile style
   _mbBtnElem;
   _mbListElem;
+  _mbListInitHeight;
   _ro;
   _mode = "pc";
 
@@ -52,8 +53,7 @@ export class Navbar {
         }
         this._mode = "mb";
       } else {
-        
-        if (this._mode === 'mb') {
+        if (this._mode === "mb") {
           this._mbBtnElem.classList.remove("clicked");
           this.removeMbStyle();
           // console.log('mb -> pc')
@@ -69,24 +69,30 @@ export class Navbar {
   handleBtnClick(e) {
     const isClicked = e.currentTarget.classList.toggle("clicked");
     if (isClicked) {
-      this._mbListElem.style.height = 'fit-content';
+      // this._mbListElem.style.transform = "";
+      this._mbListElem.style.height = `${this._mbListInitHeight}px`;
     } else {
-      this._mbListElem.style.height = '0';
+      // this._mbListElem.style.transform = "translateY(-100%)";
+      this._mbListElem.style.height = "0px";
     }
   }
   initMbStyle() {
-   this._elem.classList.remove('hide');
-   this._elem.classList.remove('nav2');
-  this._mbListElem.style.height = '0px';
+    this._elem.classList.remove("hide");
+    this._elem.classList.remove("nav2");
+    this._mbListInitHeight = this._mbListElem.offsetHeight;
+    this._mbListElem.style.height = "0px";
 
     this._mbBtnElem.addEventListener("click", this.handleBtnClick.bind(this), {
       passive: true,
     });
   }
   removeMbStyle() {
-    this._mbListElem.style.height = 'fit-content';
+    this._mbListElem.style.height = "fit-content";
 
-    this._mbBtnElem.removeEventListener("click", this.handleBtnClick.bind(this));
+    this._mbBtnElem.removeEventListener(
+      "click",
+      this.handleBtnClick.bind(this)
+    );
   }
 
   renderHide() {
@@ -131,7 +137,7 @@ export class Navbar {
   }
 
   animate() {
-    if (this._mode === 'pc') {
+    if (this._mode === "pc") {
       this.renderHide();
       this.renderTransform();
       this.renderCurrentElem();
@@ -192,7 +198,9 @@ export class AboutSection {
       const rgb = hexToRgb(selectColor[i]);
 
       video.innerHTML += `
-        <video class="v${i}" width="600" autoplay loop muted>
+        <video class="v${i}" width="600" autoplay loop muted >
+          <source src="./videos/hero${i + 1}.mp4" />
+          <source src="./videos/hero${i + 1}.mp4" />
           <source src="./videos/hero${i + 1}.mp4" />
         </video>
 
@@ -284,6 +292,29 @@ export class AboutSection {
     this._observeConditions.forEach(({ occurCondition, callback }) => {
       if (occurCondition()) callback();
     });
+
+    requestAnimationFrame(this.animate.bind(this));
+  }
+}
+
+export class KeppgoSection {
+  _btn;
+  _mode = 'pc';
+
+  constructor() {
+    this._btn = document.querySelector("#keepgo .ending .container .card-container .btn-style-xl ");
+
+    
+    requestAnimationFrame(this.animate.bind(this));
+  }
+  
+  animate() {
+    if (this._mode === 'pc' && window.innerWidth <= mb2) {
+      this._btn.classList.add('btn-style-s')
+      this._mode = 'mb';
+    } else if (window.innerWidth > mb2) {
+      this._mode = 'pc';
+    }
 
     requestAnimationFrame(this.animate.bind(this));
   }

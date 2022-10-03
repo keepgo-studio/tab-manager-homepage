@@ -112,7 +112,7 @@ export class ElementsFadeIn {
         });
       },
       {
-        threshold: 0.5,
+        threshold: 0.3,
       }
     );
 
@@ -151,7 +151,7 @@ export class ElementsFadeInOut {
         });
       },
       {
-        threshold: 0.5,
+        threshold: 0.4,
       }
     );
 

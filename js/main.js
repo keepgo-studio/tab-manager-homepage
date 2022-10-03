@@ -1,4 +1,4 @@
-import { AboutSection, Navbar } from "./elements.js";
+import { AboutSection, KeppgoSection, Navbar } from "./elements.js";
 import { LeonSansFont } from "./font.js";
 import { logoText } from "./global.js";
 import { ElementsFadeIn, ElementsFadeInOut, FadeSetting } from "./utils.js";
@@ -27,6 +27,7 @@ window.onload = () => {
 
   new Navbar();
   new AboutSection();
+  new KeppgoSection();
 
   const fadeInElements = document.querySelectorAll("[fadeIn]");
   const fadeInOutElements = document.querySelectorAll("[fadeInOut]");
